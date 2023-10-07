@@ -5,13 +5,12 @@
       <div><strong>Post text:</strong> {{ post.text }}</div>
     </div>
     <!-- <button type="button" @click="deletePost">Delete</button> -->
-    <my-button content="Delete" @click="deletePost" />
+    <!-- <my-button content="Delete" @click="$emit("remove", post)" /> -->
+    <my-button content="Delete" @click="$emit('remove', post)" />
   </div>
 </template>
 
 <script>
-import ByButton from "./UI/MyButton";
-
 export default {
   props: {
     post: {
@@ -20,12 +19,7 @@ export default {
     },
   },
 
-  methods: {
-    deletePost() {
-      // console.log(this.post.id);
-      this.$emit("delete", this.post.id);
-    },
-  },
+  methods: {},
 };
 </script>
 

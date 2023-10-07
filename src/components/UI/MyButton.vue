@@ -4,6 +4,8 @@
 
 <script>
 export default {
+  name: "my-button",
+
   props: {
     content: {
       default: "Button",
@@ -15,6 +17,7 @@ export default {
 
 <style scoped>
 .btn {
+  cursor: pointer;
   padding: 10px;
   background-color: transparent;
   border: 1px solid green;
