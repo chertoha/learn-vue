@@ -22,10 +22,4 @@ export default {
 };
 </script>
 
-<style>
-/* .post {
-  margin: 10px 0;
-  padding: 15px;
-  border: 1px solid red;
-} */
-</style>
+<style></style>
