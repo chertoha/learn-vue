@@ -23,7 +23,9 @@
       placeholder="Post text"
     /> -->
 
-    <my-button class="add-btn" content="Add Post" type="submit" @click="createPost" />
+    <my-button class="add-btn" type="submit" @click="createPost">
+      Add Post
+    </my-button>
   </form>
 </template>
 
