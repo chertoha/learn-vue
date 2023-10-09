@@ -2,7 +2,10 @@
   <div class="app">
     <!-- <my-button @click="fetchPosts">TEMP BTN</my-button> -->
     <h1>Posts page</h1>
-    <my-button @click="showDialog">Add Post</my-button>
+    <div class="app__buttons">
+      <my-button @click="showDialog">Add Post</my-button>
+      <my-select v-model="selectedSort" :options="sortOptions" />
+    </div>
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost" />
     </my-dialog>
@@ -30,6 +33,18 @@ export default {
       posts: [],
 
       isPostLoading: false,
+
+      selectedSort: "",
+      sortOptions: [
+        {
+          value: "title",
+          name: "by title",
+        },
+        {
+          value: "body",
+          name: "by text",
+        },
+      ],
     };
   },
 
@@ -83,5 +98,10 @@ export default {
 .app {
   margin: 0;
   padding: 30px;
+}
+
+.app__buttons {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
