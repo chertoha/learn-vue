@@ -1,18 +1,21 @@
 <template>
   <div class="app">
+    <!-- <my-button @click="fetchPosts">TEMP BTN</my-button> -->
     <h1>Posts page</h1>
     <my-button @click="showDialog">Add Post</my-button>
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost" />
     </my-dialog>
     <!-- <post-list :posts="posts" @remove="deletePost" /> -->
-    <post-list :posts="posts" @remove="removePost" />
+    <post-list :posts="posts" @remove="removePost" v-if="!isPostLoading" />
+    <div v-else>LOADING....</div>
   </div>
 </template>
 
 <script>
 import PostForm from "./components/PostForm";
 import PostList from "@/components/PostList";
+import axios from "axios";
 
 export default {
   components: {
@@ -24,29 +27,16 @@ export default {
     return {
       dialogVisible: false,
 
-      posts: [
-        {
-          id: 111,
-          title: "Post #1 name",
-          text: "Lorem ipsum dolor sit amet consectetur adipisicing elitPariatur, sint!",
-        },
-        {
-          id: 222,
-          title: "Post #2 name",
-          text: "Lorem ipsum dolor sit amet consectetur adipisicing elitPariatur, sint!",
-        },
-        {
-          id: 333,
-          title: "Post #3 name",
-          text: "Lorem ipsum dolor sit amet consectetur adipisicing elitPariatur, sint!",
-        },
-      ],
+      posts: [],
+
+      isPostLoading: false,
     };
   },
 
   methods: {
     createPost(post) {
       // console.log(post);
+
       this.posts.push(post);
       this.dialogVisible = false;
     },
@@ -60,6 +50,25 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+
+    async fetchPosts() {
+      try {
+        this.isPostLoading = true;
+        setTimeout(async () => {
+          const response = await axios.get(
+            "https://jsonplaceholder.typicode.com/posts?_limit=10"
+          );
+          this.posts = response.data;
+          console.log(response);
+          this.isPostLoading = false;
+        }, 1000);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
