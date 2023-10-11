@@ -4,8 +4,8 @@
     <!-- <input v-model="post.title" type="text" placeholder="Post name" /> -->
     <my-input v-model="post.title" placeholder="Post title" />
     <my-input
-      v-bind:value="post.text"
-      @input="post.text = $event.target.value"
+      v-bind:value="post.body"
+      @input="post.body = $event.target.value"
       placeholder="Post text"
     />
     <!-- <input
@@ -35,7 +35,7 @@ export default {
     return {
       post: {
         title: "",
-        text: "",
+        body: "",
       },
     };
   },
@@ -46,7 +46,7 @@ export default {
       this.$emit("create", this.post);
       this.post = {
         title: "",
-        text: "",
+        body: "",
       };
     },
   },

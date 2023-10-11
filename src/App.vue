@@ -2,6 +2,8 @@
   <div class="app">
     <!-- <my-button @click="fetchPosts">TEMP BTN</my-button> -->
     <h1>Posts page</h1>
+    <my-input v-model="searchQuery" />
+
     <div class="app__buttons">
       <my-button @click="showDialog">Add Post</my-button>
       <my-select v-model="selectedSort" :options="sortOptions" />
@@ -10,7 +12,11 @@
       <post-form @create="createPost" />
     </my-dialog>
     <!-- <post-list :posts="posts" @remove="deletePost" /> -->
-    <post-list :posts="posts" @remove="removePost" v-if="!isPostLoading" />
+    <post-list
+      :posts="sortedAndSearchedPosts"
+      @remove="removePost"
+      v-if="!isPostLoading"
+    />
     <div v-else>LOADING....</div>
   </div>
 </template>
@@ -45,6 +51,8 @@ export default {
           name: "by text",
         },
       ],
+
+      searchQuery: "",
     };
   },
 
@@ -86,10 +94,26 @@ export default {
     this.fetchPosts();
   },
 
-  watch: {
-    selectedSort(newValue) {
-      this.posts.sort((p1, p2) => p1[newValue]?.localeCompare(p2[newValue]));
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort((p1, p2) =>
+        p1[this.selectedSort]?.localeCompare(p2[this.selectedSort])
+      );
     },
+
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter(
+        ({ title, body }) =>
+          title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          body.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
+
+  watch: {
+    // selectedSort(newValue) {
+    //   this.posts.sort((p1, p2) => p1[newValue]?.localeCompare(p2[newValue]));
+    // },
   },
 };
 </script>
